@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Desafio2</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pratos_principais">Pratos principais</string>
+    <string name="imagem_de_abertura">Imagem de abertura</string>
+    <string name="imagem_representando_o_restaurante">imagem representando o restaurante</string>
 </resources>
