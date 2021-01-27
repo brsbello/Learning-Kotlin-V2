@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 
 class MyRestaurantListAdapter(
         private val list: List<RestaurantModel>,
+        private val onRestaurantClicked: (RestaurantModel) -> Unit
 ) : RecyclerView.Adapter<MyRestaurantListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -18,7 +19,7 @@ class MyRestaurantListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(generic = list[position])
+        holder.bind(generic = list[position], onRestaurantClicked)
     }
 
     override fun getItemCount(): Int {
@@ -29,7 +30,7 @@ class MyRestaurantListAdapter(
             private val binding: ItemRestaurantBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(generic: RestaurantModel) = with(binding) {
+        fun bind(generic: RestaurantModel, onRestaurantClicked: (RestaurantModel) -> Unit) = with(binding) {
             val firstImage = generic.firstImage
 
             Glide.with(itemView.context)
@@ -40,6 +41,9 @@ class MyRestaurantListAdapter(
             TVPlace.text = generic.restaurantPlace
             TVHour.text = generic.restaurantHour
 
+            itemView.setOnClickListener {
+                onRestaurantClicked(generic)
+            }
         }
     }
 

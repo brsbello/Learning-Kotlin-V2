@@ -2,6 +2,7 @@ package com.example.desafio2
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.desafio2.adapters.MyRestaurantListAdapter
 import com.example.desafio2.databinding.ActivityMainBinding
@@ -11,11 +12,15 @@ import com.example.desafio2.model.RestaurantModel
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    val navController = findNavController(R.id.nav_host_fragment)
 
     private fun recyclerView(list: List<RestaurantModel>) {
         binding.RVRestaurant.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = MyRestaurantListAdapter(list)
+            adapter = MyRestaurantListAdapter(list) {
+                val action = MainActivityDirections.activityToFirstFragment(it.id)
+                findNavController().navigate(action)
+            }
         }
     }
 
@@ -95,6 +100,7 @@ class MainActivity : AppCompatActivity() {
                 restaurantFour
             )
         )
+
         recyclerView(myRestaurantList)
     }
 }
