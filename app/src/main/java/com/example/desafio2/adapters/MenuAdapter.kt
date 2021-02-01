@@ -8,7 +8,7 @@ import com.example.desafio2.databinding.ItemMenuBinding
 import com.example.desafio2.model.PlatesModel
 
 class MenuAdapter(
-    private val list: List<PlatesModel>,
+    private val list: MutableList<PlatesModel>,
     private val onPlateClicked: (PlatesModel) -> Unit
 ) : RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
 

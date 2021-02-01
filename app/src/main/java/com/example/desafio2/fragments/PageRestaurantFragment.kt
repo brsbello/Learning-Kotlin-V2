@@ -8,18 +8,27 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.desafio2.MainActivityArgs
+import com.bumptech.glide.Glide
 import com.example.desafio2.adapters.MenuAdapter
 import com.example.desafio2.databinding.FragmentPageRestaurantBinding
 import com.example.desafio2.model.PlatesModel
 
 class PageRestaurantFragment : Fragment() {
 
-    private lateinit var binding: FragmentPageRestaurantBinding
-    val args: MainActivityArgs by navArgs()
+    lateinit var binding: FragmentPageRestaurantBinding
 
-    // como receber o id que passou no RV, por enquanto coloquei 1
-    val listToRecycler = args.restaurantList.listPlates
+    fun setupRecyclerView(platesList: MutableList<PlatesModel>) {
+        binding.RVMenu.apply {
+            layoutManager = GridLayoutManager(activity, 2)
+            adapter = MenuAdapter(platesList) {
+                val action =
+                    PageRestaurantFragmentDirections.actionPageRestaurantFragmentToDescriptionPlateFragment(
+                        it
+                    )
+                findNavController().navigate(action)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,25 +37,17 @@ class PageRestaurantFragment : Fragment() {
         binding = FragmentPageRestaurantBinding.inflate(layoutInflater)
         return binding.root
 
-
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val args: PageRestaurantFragmentArgs by navArgs()
+        val restaurant = args.restaurant
+        Glide.with(this)
+            .load(restaurant.firstImage)
+            .into(binding.IVImgTop)
+        binding.TVRestaurantName.text = restaurant.restaurantName
 
-        setupRecyclerView(listToRecycler)
-    }
-
-    private fun setupRecyclerView(platesList: MutableList<PlatesModel>) {
-        binding.RVMenu.apply {
-            layoutManager = GridLayoutManager(activity, 2)
-            adapter = MenuAdapter(platesList) {
-                val action =
-                    PageRestaurantFragmentDirections.actionPageRestaurantFragmentToDescriptionPlateFragment(
-                        it.id
-                    )
-                findNavController().navigate(action)
-            }
-        }
+        setupRecyclerView(restaurant.listPlates)
     }
 }

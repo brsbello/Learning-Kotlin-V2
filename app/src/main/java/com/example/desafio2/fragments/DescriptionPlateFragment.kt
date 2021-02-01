@@ -12,10 +12,6 @@ import com.example.desafio2.databinding.FragmentDescriptionPlateBinding
 class DescriptionPlateFragment : Fragment() {
 
     private lateinit var binding: FragmentDescriptionPlateBinding
-    private val args : PageRestaurantFragmentArgs by navArgs()
-    val oneArgs = args.listPlates.plateName
-    val twoArgs = args.listPlates.plateDescription
-    val threeArgs = args.listPlates.plateImage
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,10 +22,12 @@ class DescriptionPlateFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.TVFinalDescription.text = oneArgs
-        binding.TVFinalName.text = twoArgs
-        val finalImage = threeArgs
+        val args : DescriptionPlateFragmentArgs by navArgs()
+        val plate = args.plates
+        binding.TVFinalDescription.text = plate.plateDescription
+        binding.TVFinalName.text = plate.plateName
         Glide.with(this)
-            .load(finalImage)
-            .into(binding.IVFinalImage)    }
+            .load(plate.plateImage)
+            .into(binding.IVFinalImage)
+    }
 }

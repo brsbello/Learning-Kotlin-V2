@@ -3,25 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_host"
-    app:startDestination="@id/mainActivity"
-    tools:ignore="ExtraText">
+    tools:ignore="ExtraText"
+    app:startDestination="@id/homeFragment">
 
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.example.desafio2.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main">
-        <action
-        android:id="@+id/activityToFirstFragment"
-        app:destination="@+id/pageRestaurantFragment" />
-        <argument
-            android:name="restaurantList"
-            app:argType="com.example.desafio2.model.RestaurantModel" />
-        <argument
-            android:name="id"
-            app:argType="integer"
-            android:defaultValue="-1" />
-    </activity>
     <fragment
         android:id="@+id/pageRestaurantFragment"
         android:name="com.example.desafio2.fragments.PageRestaurantFragment"
@@ -29,23 +13,25 @@
         <action
             android:id="@+id/action_pageRestaurantFragment_to_descriptionPlateFragment"
             app:destination="@id/descriptionPlateFragment" />
-        <action
-            android:id="@+id/action_pageRestaurantFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
         <argument
-            android:name="id2"
-            app:argType="integer"
-            android:defaultValue="-1" />
-        <argument
-            android:name="listPlates"
-            app:argType="com.example.desafio2.model.PlatesModel" />
+            android:name="restaurant"
+            app:argType="com.example.desafio2.model.RestaurantModel" />
     </fragment>
     <fragment
         android:id="@+id/descriptionPlateFragment"
         android:name="com.example.desafio2.fragments.DescriptionPlateFragment"
         android:label="DescriptionPlateFragment">
+        <argument
+            android:name="plates"
+            app:argType="com.example.desafio2.model.PlatesModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.desafio2.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_descriptionPlateFragment_to_pageRestaurantFragment"
+            android:id="@+id/action_homeFragment_to_pageRestaurantFragment"
             app:destination="@id/pageRestaurantFragment" />
     </fragment>
 </navigation>
